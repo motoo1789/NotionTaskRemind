@@ -4,7 +4,7 @@ const notionHeader = token => ({
   'Notion-Version': '2022-06-28'
 })
 
-const getRemindTask = (dbID,notiontoken) => {
+const getRemindTaskfromNotion = (dbID,notiontoken) => {
 
   const endPoint = "https://api.notion.com/v1/databases/" + dbID + "/query";
   
@@ -21,12 +21,11 @@ function notionremindgmail()
 {
   const wikidatabaseId = PropertiesService.getScriptProperties().getProperty("notion_databaseID");
   const notion_token = PropertiesService.getScriptProperties().getProperty("notion_token");
-
-  const result = getRemindTask(wikidatabaseId, notion_token);
-
+  const result = getRemindTaskfromNotion(wikidatabaseId, notion_token);
   const tasks = result["results"]
 
   let startlimittasks = [];
+  let deadlinetasks = [];
   for(let task of tasks)
   {
     if(varidateTitle(task))
@@ -34,23 +33,34 @@ function notionremindgmail()
       console.log("テンプレートのタスクカードです");
       continue ;
     }
-    if(varidateStartDate(task))
+
+    if(compareStartDate(task))
     {
-      if(compareDate(task))
-      {
-        let body = normalizeStartMailBody(task);
-        console.log(body);
-        startlimittasks.push(body);
-      }
+      let startbody = normalizeStartMailBody(task);
+      startlimittasks.push(startbody);
+    }
+    if(compareDedlineDate(task))
+    {
+      let deadlinebody = normalizeStartMailBody(task);
+      deadlinetasks.push(deadlinebody);
     }
   }
 
-  if(startlimittasks.length > 0)
+  let startbody = "";
+  let deadlinebody = "";
+  if(startlimittasks.length > 0 )
   {
-    console.log("明日はタスクの開始日");
-    console.log(startlimittasks);
-    send_startmail(startlimittasks)
+    console.log("明日はタスクの開始日です");
+    startbody = generatebodymail(startlimittasks,"明日開始のタスクがあります")
   }
+
+  if(deadlinetasks.length > 0)
+  {
+    console.log("明日はタスクの締め切り日です")
+    deadlinebody = generatebodymail(deadlinetasks,"明日締め切りのタスクがあります")
+  }
+
+  remindmail(startbody,deadlinebody)
 }
 
 const normalizeStartMailBody = (task) => {

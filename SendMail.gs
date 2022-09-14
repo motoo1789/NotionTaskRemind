@@ -1,5 +1,5 @@
-const generateTaskBody = (tasksendinfo) => {
-  const partition = "***************";
+const templateTaskBody = (tasksendinfo) => {
+  const partition = "*****************************************************************";
   const body = partition + "\n" + 
               "タイトル：" + tasksendinfo.title + "\n" + 
               "開始日：" + tasksendinfo.start + "\n" + 
@@ -9,33 +9,35 @@ const generateTaskBody = (tasksendinfo) => {
   return body;
 }
 
-function send_startmail(tasks)
+function generatebodymail(tasks, taskmessage)
 {
-  console.log("bodyの作成")
-  const subject = "タスク開始のご案内"; // 件名
-  const sender = "Motoo" // 送信者
-  const recipient = "2218012@stu.nit.ac.jp"
-  const options = { name: 'タスク通知のGASアプリ' };
-
   // reduceとかで簡略化したい
   // const sendtaskinfo2 = tasks.reduce((body,task) => {
-  //   return body + generateTaskBody(task);
+  //   return body + templateTaskBody(task);
   // });
   // console.log(sendtaskinfo2);
   
-  let taskinfo = "";
+  let generatetaskinfo = "";
   tasks.forEach(function(task)
   {
-    taskinfo += generateTaskBody(task);
+    generatetaskinfo += templateTaskBody(task);
   })
     
-  const body = sender + "\n" +
-              "明日はタスクの開始日です" + "\n\n" + 
-              taskinfo + 
-              "以上です\n";
+  const body = taskmessage + "\n" + 
+               generatetaskinfo + "\n";
 
-  console.log(body);
+  return body;
+  
+}
+
+function remindmail(startbody,deadlinebody)
+{
+  const subject = "タスク開始・期限のご案内"; // 件名
+  const sender = "Motoo"; // 送信者
+  const recipient = PropertiesService.getScriptProperties().getProperty("mail_address"); 
+  const options = { name: 'タスク通知のGASアプリ' };
+
+  const body = sender + "\n\n" + startbody + deadlinebody + "以上です。";
 
   GmailApp.sendEmail(recipient, subject, body, options);
 }
-

@@ -1,5 +1,4 @@
 const getTommorrow = () => {
-  // 明日の日付の取得
   let date = new Date();
   date.setDate(date.getDate() + 1);
   const tommorrowDate = new Date(date);

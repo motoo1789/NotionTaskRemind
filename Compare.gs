@@ -1,4 +1,4 @@
-function compareDate(task)
+function compareStartDate(task)
 {
   // 明日の日付の取得
   const tommorrow = getTommorrow();
@@ -7,4 +7,15 @@ function compareDate(task)
   console.log(tommorrow);
   console.log(startTaskDate);
   return tommorrow == startTaskDate ? true : false;
+}
+
+function compareDedlineDate(task)
+{
+  // 明日の日付の取得
+  const tommorrow = getTommorrow();
+  // タスクから締め切りの取得
+  const deadlineTaskDate = getDeadlineDate(task);
+  console.log(tommorrow);
+  console.log(deadlineTaskDate);
+  return tommorrow == deadlineTaskDate ? true : false;
 }
