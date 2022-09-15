@@ -36,17 +36,12 @@ function notionremindgmail()
   let deadlinetasks = [];
   for(let task of tasks)
   {
-    if(varidateTitle(task))
+    // テンプレートのタスク or　完了済みタスクは省く
+    if(varidateRedundantTask(task))
     {
-      console.log("テンプレートのタスクカードです");
       continue ;
     }
-    if(varidateStatus(task))
-    {
-      console.log("完了済みのタスクです")
-      continue ; 
-    }
-
+    
     if(compareStartDate(task))
     {
       let startbody = normalizeStartMailBody(task);

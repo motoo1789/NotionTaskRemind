@@ -1,3 +1,16 @@
+const varidateRedundantTask = (task) => {
+  if(varidateTitle(task))
+  {
+    console.log("テンプレートのタスクカードです");
+    return true;
+  }
+  if(varidateStatus(task))
+  {
+    console.log("完了済みのタスクです")
+    return true; 
+  }
+}
+
 const varidateTitle = (task) => {
   // テンプレートのタスクの場合はundefinedではない
   const title = task["properties"]["Name"]["title"][0]["text"]["content"]
