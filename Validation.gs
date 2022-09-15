@@ -7,3 +7,7 @@ const varidateTitle = (task) => {
 const varidateStartDate = (task) => {
   return task["properties"]["開始日"]["date"]["start"] ? true : false;
 }
+
+const varidateStatus = (task) => {
+  return task["properties"]["Status"]["select"]["name"] == "Done" ? true : false;
+}

@@ -1,3 +1,10 @@
+const getTasks = () => {
+  const wikidatabaseId = PropertiesService.getScriptProperties().getProperty("notion_databaseID");
+  const notion_token = PropertiesService.getScriptProperties().getProperty("notion_token");
+  const result = getRemindTaskfromNotion(wikidatabaseId, notion_token);
+  return result["results"];
+}
+
 const getTommorrow = () => {
   let date = new Date();
   date.setDate(date.getDate() + 1);

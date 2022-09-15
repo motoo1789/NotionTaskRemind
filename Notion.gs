@@ -17,12 +17,20 @@ const getRemindTaskfromNotion = (dbID,notiontoken) => {
   return JSON.parse(response.getContentText())
 }
 
+function sampleStatus()
+{
+    
+
+    let sample =[];
+    for(let task of tasks)
+    {
+      console.log(task["properties"]["Status"]["select"]["name"])
+     }
+}
+
 function notionremindgmail()
 {
-  const wikidatabaseId = PropertiesService.getScriptProperties().getProperty("notion_databaseID");
-  const notion_token = PropertiesService.getScriptProperties().getProperty("notion_token");
-  const result = getRemindTaskfromNotion(wikidatabaseId, notion_token);
-  const tasks = result["results"]
+  const tasks = getTasks();
 
   let startlimittasks = [];
   let deadlinetasks = [];
@@ -32,6 +40,11 @@ function notionremindgmail()
     {
       console.log("テンプレートのタスクカードです");
       continue ;
+    }
+    if(varidateStatus(task))
+    {
+      console.log("完了済みのタスクです")
+      continue ; 
     }
 
     if(compareStartDate(task))
