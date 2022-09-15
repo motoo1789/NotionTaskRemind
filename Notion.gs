@@ -17,17 +17,6 @@ const getRemindTaskfromNotion = (dbID,notiontoken) => {
   return JSON.parse(response.getContentText())
 }
 
-function sampleStatus()
-{
-    
-
-    let sample =[];
-    for(let task of tasks)
-    {
-      console.log(task["properties"]["Status"]["select"]["name"])
-     }
-}
-
 function notionremindgmail()
 {
   const tasks = getTasks();

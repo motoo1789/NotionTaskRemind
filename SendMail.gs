@@ -12,19 +12,12 @@ const templateTaskBody = (tasksendinfo) => {
 function generatebodymail(tasks, taskmessage)
 {
   // reduceとかで簡略化したい
-  // const sendtaskinfo2 = tasks.reduce((body,task) => {
-  //   return body + templateTaskBody(task);
-  // });
-  // console.log(sendtaskinfo2);
-  
-  let generatetaskinfo = "";
-  tasks.forEach(function(task)
-  {
-    generatetaskinfo += templateTaskBody(task);
-  })
-    
+  const generatetaskbody  = tasks.reduce((body,task) => {
+    return body + templateTaskBody(task);
+  },""); 
+
   const body = taskmessage + "\n" + 
-               generatetaskinfo + "\n";
+               generatetaskbody + "\n";
 
   return body;
   
