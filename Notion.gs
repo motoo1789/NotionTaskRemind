@@ -20,6 +20,12 @@ const getRemindTaskfromNotion = (dbID,notiontoken) => {
 function notionremindgmail()
 {
   const tasks = getTasks();
+  if(tasks == "プログラム終了")
+  {
+    console.log("実行はここで終了です");
+    return ;
+  }
+    
 
   let startlimittasks = [];
   let deadlinetasks = [];

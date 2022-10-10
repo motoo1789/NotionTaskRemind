@@ -1,8 +1,15 @@
 const getTasks = () => {
   const wikidatabaseId = PropertiesService.getScriptProperties().getProperty("notion_databaseID");
   const notion_token = PropertiesService.getScriptProperties().getProperty("notion_token");
-  const result = getRemindTaskfromNotion(wikidatabaseId, notion_token);
-  return result["results"];
+  try {
+    const result = getRemindTaskfromNotion(wikidatabaseId, notion_token);
+    return result["results"];
+  }
+  catch(e){
+    console.log("タスクが取得できませんでした");
+    console.log("エラー内容：" + e.message);
+    return "プログラム終了";
+  }
 }
 
 const getTommorrow = () => {
@@ -13,19 +20,42 @@ const getTommorrow = () => {
 }
 
 const getStartDate = (task) => {
-  const getTaskDateString = task["properties"]["開始日"]["date"]["start"];
-  const taskStartDate = new Date(getTaskDateString)
-  return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy-MM-dd');  
+
+  try {
+    const getTaskDateString = task["properties"]["開始日"]["date"]["start"];
+    const taskStartDate = new Date(getTaskDateString)
+    return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy-MM-dd');  
+  }
+  catch(e){
+    console.log("タスクの開始日が記入されてないです");
+    console.log("エラー内容：" + e.message);
+    return "タスクの開始日が記入されてない"
+  }
 }
 
 const getDeadlineDate = (task) => {
-  const getTaskDateString = task["properties"]["締め切り"]["date"]["start"];
-  const startTaskDate = new Date(getTaskDateString)
-  return Utilities.formatDate( startTaskDate, 'Asia/Tokyo', 'yyyy-MM-dd');
+
+  try {
+    const getTaskDateString = task["properties"]["締め切り"]["date"]["start"];
+    const taskDeadlineDate = new Date(getTaskDateString)
+    return Utilities.formatDate( taskDeadlineDate, 'Asia/Tokyo', 'yyyy-MM-dd');
+  }
+  catch(e){
+    console.log("タスクの締め切りが記入されてない");
+    console.log("エラー内容：" + e.message);
+    return "タスクの締め切りが記入されてない"
+  }
 }
 
 const getTaskTitle = (task) => {
-  return title = task["properties"]["Name"]["title"][0]["text"]["content"]
+  try{
+    return title = task["properties"]["Name"]["title"][0]["text"]["content"]
+  }
+  catch(e){
+    console.log("タスクのタイトルが記入されていないです");
+    console.log("エラー内容：" + e.message);
+    return "タスク名未記入"
+  }
 }
 
 const getTaskURL = (task) => {
