@@ -19,8 +19,3 @@ function compareDedlineDate(task)
   console.log(deadlineTaskDate);
   return tommorrow == deadlineTaskDate ? true : false;
 }
-
-function isDoing(task)
-{
-  return varidateStatusDoing(task);
-}

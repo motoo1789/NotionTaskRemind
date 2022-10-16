@@ -11,11 +11,18 @@ const getTasks = () => {
     return "プログラム終了";
   }
 }
+const getToday = () => {
+  let date = new Date();
+  date.setDate(date.getDate());
+  const tommorrowDate = new Date(date);
+  return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy-MM-dd');
+}
 
 const getTommorrow = () => {
   let date = new Date();
   date.setDate(date.getDate() + 1);
   const tommorrowDate = new Date(date);
+  console.log(tommorrowDate)
   return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy-MM-dd');
 }
 
@@ -23,11 +30,12 @@ const getStartDate = (task) => {
 
   try {
     const getTaskDateString = task["properties"]["開始日"]["date"]["start"];
+    console.log(getTaskDateString)
     const taskStartDate = new Date(getTaskDateString)
     return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy-MM-dd');  
   }
   catch(e){
-    console.log("タスクの開始日が記入されてないです");
+    console.log("タスクの開始日が記入されてないです getStartDate");
     console.log("エラー内容：" + e.message);
     return "タスクの開始日が記入されてない"
   }

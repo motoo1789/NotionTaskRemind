@@ -6,6 +6,11 @@
         "userSymbol": "SlackApp",
         "version": "22",
         "libraryId": "1on93YOYfSmV92R5q59NpKmsyWIQD8qnoLYk-gkQBI92C58SPyA2x1-bq"
+      },
+      {
+        "userSymbol": "dayjs",
+        "version": "1",
+        "libraryId": "1ShsRhHc8tgPy5wGOzUvgEhOedJUQD53m-gd8lG2MOgs-dXC_aCZn9lFB"
       }
     ]
   },

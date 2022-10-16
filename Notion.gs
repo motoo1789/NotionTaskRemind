@@ -29,11 +29,20 @@ function notionremindgmail()
 
   let startlimittasks = [];
   let deadlinetasks = [];
-  let doingtasksk = [];
+  let doingtasksks = [];
+  let donetasks = [];
   for(let task of tasks)
   {
-    // テンプレートのタスク or　完了済みタスクは省く
-    if(varidateRedundantTask(task))
+
+    // 完了済みタスクは省く or テンプレートのタスク
+    // HACK: CoRみたいな感じの方がよいかも
+    if(varidateStatusDone(task))
+    {
+      donetasks.push(task);
+      continue ;
+    }
+
+    if(varidateTitle(task))
     {
       continue ;
     }
@@ -49,17 +58,27 @@ function notionremindgmail()
       deadlinetasks.push(deadlinebody);
       continue ;
     }
-
-    if(isDoing(task))
+    if(varidateStatusDoing(task))
     {
       
       const doingtodo = normalizeStartMailBody(task);
-      doingtasksk.push(doingtodo);
-      console.log(doingtodo)
+      doingtasksks.push(doingtodo);
       continue ;
     }
   }
 
+  // タスクの通知
+  sendtask(startlimittasks,deadlinetasks,doingtasksks);
+
+  // 完了済みのタスクはある程度たったら消しておく
+  // 対象
+  // ・優先度が低いもの
+  // ・タスク完了から30日たっているもの
+  deleteDoneTask(donetasks)
+
+}
+
+const sendtask = (startlimittasks,deadlinetasks,doingtasksks) => {
   let startbody = "";
   let deadlinebody = "";
   let doingbody = "";
@@ -75,13 +94,39 @@ function notionremindgmail()
     deadlinebody = generatebodymail(deadlinetasks,"明日締め切りのタスクがあります")
   }
 
-  if(doingtasksk.length > 0)
+  if(doingtasksks.length > 0)
   {
     console.log("実施中のタスクです");
-    doingbody = generatebodymail(doingtasksk,"実施中のタスクです")
+    doingbody = generatebodymail(doingtasksks,"実施中のタスクです")
   }
 
   remindmail(startbody,deadlinebody,doingbody)
+}
+
+const deleteDoneTask = (varidationtargetDoneTasks) => {
+  
+  const deletetasks = varidationtargetDoneTasks.filter(varidatetargettask => varidateLowPriority(varidatetargettask) == true || 
+                                                                            varidatedeletedete(varidatetargettask) == true);
+  
+  deletetasks.map(deletetargettask => deleteAPI(deletetargettask));
+                                                                
+}
+
+const deleteAPI = (task) => {
+  const ENDPOINT_DELETE_PAGE = "https://api.notion.com/v1/pages/"
+  const url = ENDPOINT_DELETE_PAGE + task["id"];
+  const NOTION_TOKEN = PropertiesService.getScriptProperties().getProperty("notion_token");
+
+  const payload = {
+    "archived" : true
+  }
+  const options = {
+    method : "PATCH",
+    headers: notionHeader(NOTION_TOKEN),
+    payload : JSON.stringify(payload),
+  }
+
+  UrlFetchApp.fetch(url,options)
 }
 
 const normalizeStartMailBody = (task) => {
