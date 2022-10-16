@@ -6,7 +6,7 @@ const varidateRedundantTask = (task) => {
     console.log("テンプレートのタスクカードです");
     return true;
   }
-  if(varidateStatus(task))
+  if(varidateStatusDone(task))
   {
     console.log("完了済みのタスクです")
     return true; 
@@ -48,7 +48,18 @@ const varidateDeadlineDate = (task) => {
   }
 }
 
-const varidateStatus = (task) => {
+const varidateStatusDoing = (task) => {
+  try{
+    return task["properties"]["Status"]["select"]["name"] == "Doing" ? true : false;
+  }
+  catch(e){
+    console.log("タスクのステータス参照できない")
+    console.log("エラー内容：" + e.message);
+    return false;
+  }
+}
+
+const varidateStatusDone = (task) => {
   try{
     return task["properties"]["Status"]["select"]["name"] == "Done" ? true : false;
   }

@@ -29,6 +29,7 @@ function notionremindgmail()
 
   let startlimittasks = [];
   let deadlinetasks = [];
+  let doingtasksk = [];
   for(let task of tasks)
   {
     // テンプレートのタスク or　完了済みタスクは省く
@@ -39,18 +40,29 @@ function notionremindgmail()
     
     if(compareStartDate(task))
     {
-      let startbody = normalizeStartMailBody(task);
+      const startbody = normalizeStartMailBody(task);
       startlimittasks.push(startbody);
     }
     if(compareDedlineDate(task))
     {
-      let deadlinebody = normalizeStartMailBody(task);
+      const deadlinebody = normalizeStartMailBody(task);
       deadlinetasks.push(deadlinebody);
+      continue ;
+    }
+
+    if(isDoing(task))
+    {
+      
+      const doingtodo = normalizeStartMailBody(task);
+      doingtasksk.push(doingtodo);
+      console.log(doingtodo)
+      continue ;
     }
   }
 
   let startbody = "";
   let deadlinebody = "";
+  let doingbody = "";
   if(startlimittasks.length > 0 )
   {
     console.log("明日はタスクの開始日です");
@@ -63,7 +75,13 @@ function notionremindgmail()
     deadlinebody = generatebodymail(deadlinetasks,"明日締め切りのタスクがあります")
   }
 
-  remindmail(startbody,deadlinebody)
+  if(doingtasksk.length > 0)
+  {
+    console.log("実施中のタスクです");
+    doingbody = generatebodymail(doingtasksk,"実施中のタスクです")
+  }
+
+  remindmail(startbody,deadlinebody,doingbody)
 }
 
 const normalizeStartMailBody = (task) => {
