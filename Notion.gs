@@ -19,69 +19,224 @@ const getRemindTaskfromNotion = (dbID,notiontoken) => {
 
 function notionremindgmail()
 {
-  const tasks = getTasks();
-  if(tasks == "プログラム終了")
-  {
-    console.log("実行はここで終了です");
-    return ;
-  }
+  tmp.exe();
+
+  // const tasks = getTasks();
+  // if(tasks == "プログラム終了")
+  // {
+  //   console.log("実行はここで終了です");
+  //   return "プログラム終了";
+  // }
+  
+
+  // let startlimittasks = new Array();
+  // let deadlinetasks = new Array();
+  // let doingtasks = new Array();
+  // let donetasks = new Array();
+  
+  // // TODO map →　何かに名前変える
+  // let map = new Map();
+  // map.set("done",new Array());
+
+  // map.set("startdate",new Array());
+  // map.set("deadlinedate",new Array());
+  // map.set("doing",new Array());
+  // map.set("title",new Array());
+  // map.set("none",new Array());
+
+  // let donceclass = new StatusDone();
+  // let startclass = new StartDate();
+  // let deadlineclass = new DedlineDate();
+  // let doingclass = new StatusDoing();
+  // let titleclass = new TitleClass();
+  // donceclass.setnext(startclass);
+  // startclass.setnext(deadlineclass);
+  // deadlineclass.setnext(doingclass);
+  // doingclass.setnext(titleclass);
+
+  // for(let task of tasks)
+  // {
+
+  //   // // 完了済みタスクは省く or テンプレートのタスク
+  //   // // HACK: CoRみたいな感じの方がよいかも
+  //   console.log("各配列の確認")
+  //   // console.log("doing" + map.get("doing"))
+  //   // console.log("done" + map.get("done"))
+  //   // console.log("none" + map.get("none"))
+  //   // console.log("title" + map.get("title"))
+  //   // console.log("startdate" + map.get("startdate"))
+  //   // console.log("deadlinedate" + map.get("deadlinedate"))
+
+
+
+  //   console.log("doing" + doingtasks)
+  //   console.log("doingの型:" + Array.isArray(doingtasks))
+  //   console.log("done" + donetasks)
+  //   console.log("startdate" + startlimittasks)
+  //   console.log("deadlinedate" + deadlinetasks)
     
 
-  let startlimittasks = [];
-  let deadlinetasks = [];
-  let doingtasksks = [];
-  let donetasks = [];
-  for(let task of tasks)
-  {
-
-    // 完了済みタスクは省く or テンプレートのタスク
-    // HACK: CoRみたいな感じの方がよいかも
-    if(varidateStatusDone(task))
-    {
-      donetasks.push(task);
-      continue ;
-    }
-
-    if(varidateTitle(task))
-    {
-      continue ;
-    }
+  //   //let tmp = map.get(donceclass.varidate(task))
+  //   console.log("taskの型：");
+  //   console.log(task);
+   
+  
+  //   donceclass.varidate(task,this)
     
-    if(compareStartDate(task))
-    {
-      const startbody = normalizeStartMailBody(task);
-      startlimittasks.push(startbody);
-    }
-    if(compareDedlineDate(task))
-    {
-      const deadlinebody = normalizeStartMailBody(task);
-      deadlinetasks.push(deadlinebody);
-      continue ;
-    }
-    if(varidateStatusDoing(task))
-    {
-      
-      const doingtodo = normalizeStartMailBody(task);
-      doingtasksks.push(doingtodo);
-      continue ;
-    }
-  }
+
+    // if(varidateStatusDone(task))
+    // {
+    //   donetasks.push(task);
+    //   continue ;
+    // }
+
+    // if(varidateTitle(task))
+    // {
+    //   continue ;
+    // }
+    
+    // if(compareStartDate(task))
+    // {
+    //   const startbody = normalizeStartMailBody(task);
+    //   startlimittasks.push(startbody);
+    // }
+    // if(compareDedlineDate(task))
+    // {
+    //   const deadlinebody = normalizeStartMailBody(task);
+    //   deadlinetasks.push(deadlinebody);
+    //   continue ;
+    // }
+    // if(varidateStatusDoing(task))
+    // {
+    //   const doingtodo = normalizeStartMailBody(task);
+    //   doingtasks.push(doingtodo);
+    //   continue ;
+    // }
+  // }
 
   // タスクの通知
-  sendtask(startlimittasks,deadlinetasks,doingtasksks);
+  //sendtask(startlimittasks,deadlinetasks,doingtasks);
 
   // 完了済みのタスクはある程度たったら消しておく
   // 対象
   // ・優先度が低いもの
   // ・タスク完了から30日たっているもの
-  deleteDoneTask(donetasks)
+  //deleteDoneTask(donetasks)
 
 }
+const tmp = {
+  exe(){
+    const tasks = getTasks();
+    if(tasks == "プログラム終了")
+    {
+      console.log("実行はここで終了です");
+      return "プログラム終了";
+    }
+    
 
-const sendtask = (startlimittasks,deadlinetasks,doingtasksks) => {
+    let startlimittasks = new Array();
+    let deadlinetasks = new Array();
+    let doingtasks = new Array();
+    let donetasks = new Array();
+
+    console.log(this)
+    
+    // TODO map →　何かに名前変える
+    let map = new Map();
+    map.set("done",new Array());
+
+    map.set("startdate",new Array());
+    map.set("deadlinedate",new Array());
+    map.set("doing",new Array());
+    map.set("title",new Array());
+    map.set("none",new Array());
+
+    let donceclass = new StatusDone();
+    let startclass = new StartDate();
+    let deadlineclass = new DedlineDate();
+    let doingclass = new StatusDoing();
+    let titleclass = new TitleClass();
+    donceclass.setnext(startclass);
+    startclass.setnext(deadlineclass);
+    deadlineclass.setnext(doingclass);
+    doingclass.setnext(titleclass);
+
+    for(let task of tasks)
+    {
+
+      // // 完了済みタスクは省く or テンプレートのタスク
+      // // HACK: CoRみたいな感じの方がよいかも
+      console.log("各配列の確認")
+      // console.log("doing" + map.get("doing"))
+      // console.log("done" + map.get("done"))
+      // console.log("none" + map.get("none"))
+      // console.log("title" + map.get("title"))
+      // console.log("startdate" + map.get("startdate"))
+      // console.log("deadlinedate" + map.get("deadlinedate"))
+
+
+
+      console.log("doing" + doingtasks)
+      console.log("doingの型:" + Array.isArray(doingtasks))
+      console.log("done" + donetasks)
+      console.log("startdate" + startlimittasks)
+      console.log("deadlinedate" + deadlinetasks)
+      
+
+      //let tmp = map.get(donceclass.varidate(task))
+      console.log("taskの型：");
+      console.log(task);
+    
+    
+      donceclass.varidate(task,this)
+      
+
+      // if(varidateStatusDone(task))
+      // {
+      //   donetasks.push(task);
+      //   continue ;
+      // }
+
+      // if(varidateTitle(task))
+      // {
+      //   continue ;
+      // }
+      
+      // if(compareStartDate(task))
+      // {
+      //   const startbody = normalizeStartMailBody(task);
+      //   startlimittasks.push(startbody);
+      // }
+      // if(compareDedlineDate(task))
+      // {
+      //   const deadlinebody = normalizeStartMailBody(task);
+      //   deadlinetasks.push(deadlinebody);
+      //   continue ;
+      // }
+      // if(varidateStatusDoing(task))
+      // {
+      //   const doingtodo = normalizeStartMailBody(task);
+      //   doingtasks.push(doingtodo);
+      //   continue ;
+      // }
+    }
+
+    // タスクの通知
+    sendtask(startlimittasks,deadlinetasks,doingtasks);
+
+    // 完了済みのタスクはある程度たったら消しておく
+    // 対象
+    // ・優先度が低いもの
+    // ・タスク完了から30日たっているもの
+    deleteDoneTask(donetasks)
+  }
+}
+
+const sendtask = (startlimittasks,deadlinetasks,doingtasks) => {
   let startbody = "";
   let deadlinebody = "";
   let doingbody = "";
+
   if(startlimittasks.length > 0 )
   {
     console.log("明日はタスクの開始日です");
@@ -94,10 +249,10 @@ const sendtask = (startlimittasks,deadlinetasks,doingtasksks) => {
     deadlinebody = generatebodymail(deadlinetasks,"明日締め切りのタスクがあります")
   }
 
-  if(doingtasksks.length > 0)
+  if(doingtasks.length > 0)
   {
     console.log("実施中のタスクです");
-    doingbody = generatebodymail(doingtasksks,"実施中のタスクです")
+    doingbody = generatebodymail(doingtasks,"実施中のタスクです")
   }
 
   remindmail(startbody,deadlinebody,doingbody)
@@ -106,8 +261,7 @@ const sendtask = (startlimittasks,deadlinetasks,doingtasksks) => {
 const deleteDoneTask = (varidationtargetDoneTasks) => {
   
   const deletetasks = varidationtargetDoneTasks.filter(varidatetargettask => varidateLowPriority(varidatetargettask) == true || 
-                                                                            varidatedeletedete(varidatetargettask) == true);
-  
+                                                                             varidatedeletedete (varidatetargettask) == true);
   deletetasks.map(deletetargettask => deleteAPI(deletetargettask));
                                                                 
 }

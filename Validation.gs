@@ -84,8 +84,8 @@ const varidatedeletedete = (task) => {
   const today = new dayjs.dayjs(getToday());
   const taskdeadline = new dayjs.dayjs(getDeadlineDate(task));
   
-  console.log(getTaskTitle(task))
-  console.log(today.diff(taskdeadline,"day"))
+  // console.log(getTaskTitle(task))
+  // console.log(today.diff(taskdeadline,"day"))
   return today.diff(taskdeadline,"day") >= 30 ? true :false;
 
 }
