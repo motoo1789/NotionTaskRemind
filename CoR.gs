@@ -44,9 +44,7 @@ class StatusDone {
   varidate(task,done)
   {
     if(varidateStatusDone(task))
-    {
-      console.log(done.donetasks)
-      
+    {  
       done.donetasks.push(task);
       return "done";
     }
@@ -75,7 +73,8 @@ class StartDate {
   {
     if(compareStartDate(task))
     {
-      startlimit.startlimittasks.push(task);
+      const startbody = normalizeStartMailBody(task);
+      startlimit.startlimittasks.push(startbody);
       return "startdate";
     }
     else if(this.next) 
@@ -103,7 +102,8 @@ class DedlineDate {
   {
     if(compareDedlineDate(task))
     {
-      deadline.deadlinetasks.push(task);
+      const deadlinebody = normalizeStartMailBody(task);
+      deadline.deadlinetasks.push(deadlinebody);
       return "deadlinedate" 
     }
     else if(this.next) 
@@ -131,7 +131,8 @@ class StatusDoing {
   {
     if(varidateStatusDoing(task))
     {
-      doing.doingtasks.push(task);
+      const doingtodo = normalizeStartMailBody(task);
+      doing.doingtasks.push(doingtodo);
       return "doing";
     }
     else if(this.next) 

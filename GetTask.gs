@@ -22,7 +22,6 @@ const getTommorrow = () => {
   let date = new Date();
   date.setDate(date.getDate() + 1);
   const tommorrowDate = new Date(date);
-  console.log(tommorrowDate)
   return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy-MM-dd');
 }
 
@@ -30,7 +29,6 @@ const getStartDate = (task) => {
 
   try {
     const getTaskDateString = task["properties"]["開始日"]["date"]["start"];
-    console.log(getTaskDateString)
     const taskStartDate = new Date(getTaskDateString)
     return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy-MM-dd');  
   }
