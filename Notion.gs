@@ -30,12 +30,15 @@ const sendtask = (startlimittasks,deadlinetasks,doingtasks) => {
 
   if(startlimittasks.length > 0 )
   {
-    startbody = generatebodymail(startlimittasks,"明日開始のタスクがあります")
+    const startbodys = startlimittasks.map(task => normalizeStartMailBody(task));
+    startbody = generatebodymail(startbodys,"明日開始のタスクがあります")
+    startlimittasks.forEach(changeStatustoDoingTargetTask => changetaskStatustoDoing(changeStatustoDoingTargetTask))
   }
 
   if(deadlinetasks.length > 0)
   {
-    deadlinebody = generatebodymail(deadlinetasks,"明日締め切りのタスクがあります")
+    const deadlinebodys = deadlinetasks.map(task => normalizeStartMailBody(task));
+    deadlinebody = generatebodymail(deadlinebodys,"明日締め切りのタスクがあります")
   }
 
   if(doingtasks.length > 0)

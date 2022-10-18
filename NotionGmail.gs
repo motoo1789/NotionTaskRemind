@@ -31,8 +31,6 @@ class NotionTaskGmail {
 
     for(let task of tasks)
     {
-      // // 完了済みタスクは省く or テンプレートのタスク
-      // // HACK: CoRみたいな感じの方がよいかも  
       donceclass.varidate(task,this)
     }
 
