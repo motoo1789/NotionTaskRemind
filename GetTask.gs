@@ -67,3 +67,7 @@ const getTaskTitle = (task) => {
 const getTaskURL = (task) => {
   return getTaskDateString = task["url"];
 }
+
+const getTaskId = (task) => {
+  return task["id"];
+}

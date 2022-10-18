@@ -73,8 +73,7 @@ class StartDate {
   {
     if(compareStartDate(task))
     {
-      const startbody = normalizeStartMailBody(task);
-      startlimit.startlimittasks.push(startbody);
+      startlimit.startlimittasks.push(task);
       return "startdate";
     }
     else if(this.next) 
@@ -102,8 +101,7 @@ class DedlineDate {
   {
     if(compareDedlineDate(task))
     {
-      const deadlinebody = normalizeStartMailBody(task);
-      deadline.deadlinetasks.push(deadlinebody);
+      deadline.deadlinetasks.push(task);
       return "deadlinedate" 
     }
     else if(this.next) 
