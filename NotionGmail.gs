@@ -31,6 +31,7 @@ class NotionTaskGmail {
 
     for(let task of tasks)
     {
+      //jsoncheck(task)
       donceclass.varidate(task,this)
     }
 
