@@ -28,9 +28,12 @@ const getTommorrow = () => {
 const getStartDate = (task) => {
 
   try {
-    const getTaskDateString = task["properties"]["開始日"]["date"]["start"];
-    const taskStartDate = new Date(getTaskDateString)
-    return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy-MM-dd');  
+    const getTaskDateString = task["properties"]["開始と期限"]["date"]["start"];
+    const taskstartindex = getTaskDateString.indexOf(".")
+    const slicestartstr = getTaskDateString.slice(0,taskstartindex)
+
+    const taskStartDate = new Date(slicestartstr)
+    return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm');  
   }
   catch(e){
     console.log("タスクの開始日が記入されてないです getStartDate");
@@ -42,9 +45,13 @@ const getStartDate = (task) => {
 const getDeadlineDate = (task) => {
 
   try {
-    const getTaskDateString = task["properties"]["締め切り"]["date"]["start"];
-    const taskDeadlineDate = new Date(getTaskDateString)
-    return Utilities.formatDate( taskDeadlineDate, 'Asia/Tokyo', 'yyyy-MM-dd');
+    const taskenddate = task["properties"]["開始と期限"]["date"]["end"]
+    const taskendindex= taskenddate.indexOf(".")
+    const sliceendstr = taskenddate.slice(0,taskendindex)
+
+    const taskDeadlineDate = new Date(sliceendstr)
+    console.log("ハバ卒：" + taskDeadlineDate)
+    return Utilities.formatDate( taskDeadlineDate, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm');
   }
   catch(e){
     console.log("タスクの締め切りが記入されてない");
