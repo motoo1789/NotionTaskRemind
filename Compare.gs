@@ -1,17 +1,29 @@
 function compareStartDate(task)
 {
   // 明日の日付の取得
-  const tommorrow = getTommorrow();
+  const today = new dayjs.dayjs(getToday());
+  const tommorrow = today.add(1, 'day');
   // タスクから開始日の取得
   const startTaskDate = getStartDate(task);
-  return tommorrow == startTaskDate ? true : false;
+  
+  if(tommorrow.isAfter(startTaskDate))
+  {
+    return false;
+  }
+  return tommorrow.diff(startTaskDate,"day") == 0 ? true : false;
 }
 
 function compareDedlineDate(task)
 {
   // 明日の日付の取得
-  const tommorrow = getTommorrow();
+  const today = new dayjs.dayjs(getToday());
+  const tommorrow = today.add(1, 'day')
+
   // タスクから締め切りの取得
   const deadlineTaskDate = getDeadlineDate(task);
-  return tommorrow == deadlineTaskDate ? true : false;
+  if(tommorrow.isAfter(deadlineTaskDate))
+  {
+    return false;
+  }
+  return tommorrow.diff(deadlineTaskDate,"day") == 0 ? true : false;
 }

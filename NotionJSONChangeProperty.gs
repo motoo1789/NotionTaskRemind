@@ -6,8 +6,6 @@ changetaskStatustoDoing = (task) => {
   const payload = {
     properties: {
       Status:{ 
-        id: '%5EOE%40',
-        type: 'select',
         select: { 
           name: 'Doing', 
         } 
