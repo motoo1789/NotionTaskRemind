@@ -15,24 +15,24 @@ const getToday = () => {
   let date = new Date();
   date.setDate(date.getDate());
   const tommorrowDate = new Date(date);
-  return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy-MM-dd');
+  return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy/MM/dd');
 }
 
 const getTommorrow = () => {
   let date = new Date();
   date.setDate(date.getDate() + 1);
   const tommorrowDate = new Date(date);
-  return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy-MM-dd');
+  return Utilities.formatDate( tommorrowDate, 'Asia/Tokyo', 'yyyy/MM/dd');
 }
 
 const getStartDate = (task) => {
-
   try {
     const getTaskDateString = task["properties"]["開始と期限"]["date"]["start"];
     const taskstartindex = getTaskDateString.indexOf(".")
     const slicestartstr = getTaskDateString.slice(0,taskstartindex)
 
     const taskStartDate = new Date(slicestartstr)
+    console.log("あるタスクの開始日時：" + Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm'))
     return Utilities.formatDate( taskStartDate, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm');  
   }
   catch(e){
