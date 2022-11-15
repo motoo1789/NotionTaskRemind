@@ -24,11 +24,20 @@ function notionremindgmail()
 }
 
 const sendtask = (startlimittasks,deadlinetasks,doingtasks) => {
+
+  // doingのタスクだけnormalizeStartMailBodyされてる
+
+  // 期限切れでステータスが実施中になっているタスクを抽出
+  const overduetasks = doingtasks.filter(task => varidateOverdue(task))
+  console.log("期限切れのタスクの数" + doingtasks.length)
+
+
   let startbody = "";
   let deadlinebody = "";
   let doingbody = "";
+  let overduebody = "";
 
-  if(startlimittasks.length > 0 )
+  if(startlimittasks.length > 0)
   {
     const startbodys = startlimittasks.map(task => normalizeStartMailBody(task));
     startbody = generatebodymail(startbodys,"明日開始のタスクがあります")
@@ -46,7 +55,13 @@ const sendtask = (startlimittasks,deadlinetasks,doingtasks) => {
     doingbody = generatebodymail(doingtasks,"実施中のタスクです")
   }
 
-  remindmail(startbody,deadlinebody,doingbody)
+  if(overduetasks.length > 0)
+  {
+    console.log(overduetasks)
+    overduebody = generatebodymail(overduetasks,"期限切れの実施中タスクです！！")
+  }
+
+  remindmail(startbody,deadlinebody,doingbody,overduebody);
 }
 
 const deleteDoneTask = (varidationtargetDoneTasks) => {

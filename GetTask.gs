@@ -55,6 +55,7 @@ const getDeadlineDate = (task) => {
   }
   catch(e){
     console.log("タスクの締め切りが記入されてない");
+    console.log("タスク名：" + getTaskTitle(task));
     console.log("エラー内容：" + e.message);
     return "タスクの締め切りが記入されてない"
   }

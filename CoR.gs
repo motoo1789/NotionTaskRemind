@@ -44,7 +44,7 @@ class StatusDone {
   varidate(task,done)
   {
     if(varidateStatusDone(task))
-    {  
+    { 
       done.donetasks.push(task);
       return "done";
     }
